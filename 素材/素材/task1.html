@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万物互联、极致体验</title>
+    <style>
+        @font-face {
+            font-family: "书法标题";
+            src: url("./fonts/书法.ttf") format("truetype");
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #ffffff;
+            font-family: "Microsoft Yahei", sans-serif;
+            padding: 40px 20px;
+        }
+        .title-main {
+            text-align: center;
+            font-family: "书法标题", "Microsoft Yahei", sans-serif;
+            font-size: 46px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            /* 标题阴影效果模拟原图 */
+            text-shadow: 2px 2px 3px #666;
+        }
+        .top-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .col-item {
+            width: 45%;
+            text-align: center;
+        }
+        .col-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .col-item p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #000000;
+            text-align: justify;
+        }
+        .platform-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+        .platform-wrap {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .platform-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .platform-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom:12px;
+        }
+        .platform-card .desc {
+            font-size:16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title-main">万物互联、极致体验</h1>
+
+    <div class="top-row">
+        <!-- HTML5 左侧 -->
+        <div class="col-item">
+            <img src="./images/1.png" alt="HTML5">
+            <p>【HTML5】HTML5不仅仅是HTML规范的当前最新版本，HTML5进化的重大意义还在于HTML5从技术层面带来了八个类别的革新。HTML5规范以 “用户至上” 为宗旨。也就是说在遇到冲突时，规范的优先级为：用户&gt;页面作者&gt;实现者（浏览器）&gt;规范开发者（W3C/WHATWG）&gt;纯理论。除此之外，HTML5还引入了一种新的安全模型来保证HTML5足够安全。</p>
+        </div>
+        <!-- CSS3 右侧 -->
+        <div class="col-item">
+            <img src="./images/2.png" alt="CSS3">
+            <p>【HTML5】HTML5不仅仅是HTML规范的当前最新版本，HTML5进化的重大意义还在于HTML5从技术层面带来了八个类别的革新。HTML5规范以 “用户至上” 为宗旨。也就是说在遇到冲突时，规范的优先级为：用户&gt;页面作者&gt;实现者（浏览器）&gt;规范开发者（W3C/WHATWG）&gt;纯理论。除此之外，HTML5还引入了一种新的安全模型来保证HTML5足够安全。</p>
+        </div>
+    </div>
+
+    <h2 class="platform-title">平台支持</h2>
+    <div class="platform-wrap">
+        <div class="platform-card">
+            <img src="./images/3.png" alt="苹果">
+            <div class="desc">原生移动APP开发</div>
+        </div>
+        <div class="platform-card">
+            <img src="./images/4.png" alt="微信">
+            <div class="desc">微信公共平台开发</div>
+        </div>
+        <div class="platform-card">
+            <img src="./images/5.png" alt="显示器">
+            <div class="desc">网站开发</div>
+        </div>
+        <div class="platform-card">
+            <img src="./images/6.png" alt="笔记本">
+            <div class="desc">桌面应用开发</div>
+        </div>
+    </div>
+
+</body>
+</html>
