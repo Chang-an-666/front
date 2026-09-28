@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户登录 - AI助教答疑平台</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+      background: linear-gradient(180deg, #e8f0fb 0%, #f4f7fb 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      padding: 40px 16px;
+      color: #333;
+    }
+
+    /* ===== 页面顶部标题区（与注册页一致） ===== */
+    .page-header {
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: #1e3a5f;
+      margin-bottom: 8px;
+    }
+
+    .page-header .page-subtitle {
+      font-size: 13px;
+      color: #9aa7b8;
+      letter-spacing: 1px;
+    }
+
+    /* ===== 白色圆角卡片 ===== */
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(30, 64, 120, 0.08);
+      padding: 32px;
+    }
+
+    .card .card-title {
+      text-align: center;
+      font-size: 18px;
+      color: #1e3a5f;
+      margin-bottom: 6px;
+    }
+
+    .card .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #9aa7b8;
+      margin-bottom: 24px;
+    }
+
+    .form-item {
+      margin-bottom: 18px;
+    }
+
+    .form-item label {
+      display: block;
+      font-size: 14px;
+      color: #4a5a6e;
+      margin-bottom: 6px;
+    }
+
+    .form-item label .required {
+      color: #e5484d;
+      margin-left: 2px;
+    }
+
+    .form-item input {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      font-size: 14px;
+      border: 1px solid #dce3ec;
+      border-radius: 8px;
+      outline: none;
+      background: #fbfcfe;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    /* 输入框 hover：悬停时边框加深、背景变白 */
+    .form-item input:hover {
+      border-color: #b9cbe8;
+      background: #ffffff;
+    }
+
+    /* 输入框 focus（获取焦点）：蓝色边框 + 浅蓝光晕 */
+    .form-item input:focus {
+      border-color: #2f6fed;
+      box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.12);
+      background: #ffffff;
+    }
+
+    /* 纯CSS提示：输入过内容且不合法时标红（配合原生校验，不用JS） */
+    .form-item input:not(:placeholder-shown):invalid {
+      border-color: #e5484d;
+    }
+
+    /* 记住我一行布局 */
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #4a5a6e;
+      margin: 4px 0 22px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .remember input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #2f6fed;
+      cursor: pointer;
+    }
+
+    /* ===== 登录按钮：hover 上浮 + 阴影加深，active 按下回落 ===== */
+    .btn-submit {
+      width: 100%;
+      height: 44px;
+      border: none;
+      border-radius: 8px;
+      background: #2f6fed;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(47, 111, 237, 0.25);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #2560d4;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(47, 111, 237, 0.35);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(47, 111, 237, 0.3);
+    }
+
+    .register-link {
+      text-align: center;
+      font-size: 13px;
+      color: #9aa7b8;
+      margin-top: 18px;
+    }
+
+    .register-link a {
+      color: #2f6fed;
+      text-decoration: none;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 页面顶部标题 ===== -->
+  <header class="page-header">
+    <h1>AI助教答疑平台</h1>
+    <p class="page-subtitle">智能答疑 · 随时提问</p>
+  </header>
+
+  <main class="card">
+    <h2 class="card-title">用户登录</h2>
+    <p class="subtitle">欢迎回来 · 智能答疑随时可用</p>
+
+    <!--
+      ============================================================
+      HTML5 表单增强一览（纯原生校验，未使用任何 JS）
+      ============================================================
+       1. required                    必填校验，为空时浏览器阻止提交并弹气泡
+       2. placeholder                 输入框占位提示文字
+       3. autofocus                   页面加载后自动聚焦账号输入框
+       4. autocomplete="username"     告知浏览器此框为账号，可自动填充
+       5. type="password" + autocomplete="current-password"
+                                      密文显示 + 自动填充已保存的登录密码
+       6. checkbox（无 required）     "记住我"可选项，勾选与否不影响提交
+       7. title                       校验失败气泡中显示的自定义说明文字
+       8. :invalid / :placeholder-shown（CSS 伪类）纯 CSS 非法输入高亮
+      ============================================================
+    -->
+    <form action="#" method="post" autocomplete="on">
+
+      <!-- ========== 1. 账号（邮箱 / 用户名） ========== -->
+      <!-- 增强属性：
+           required                 必填，为空时浏览器阻止提交
+           autofocus                页面打开自动聚焦到此输入框
+           placeholder              占位提示文字
+           autocomplete="username"  登录账号统一语义，浏览器可自动填充
+           说明：因为要同时接受"邮箱或用户名"两种输入，所以用 type="text"，
+                 不能用 type="email"（那会强制要求邮箱格式）；纯 CSS 无法
+                 做二选一校验，格式校验留待后续 JS / 后端兜底 -->
+      <div class="form-item">
+        <label for="account">账号<span class="required">*</span></label>
+        <input type="text" id="account" name="account"
+               placeholder="请输入邮箱或用户名"
+               required autofocus
+               autocomplete="username"
+               title="请输入注册时的邮箱或用户名">
+      </div>
+
+      <!-- ========== 2. 登录密码 ========== -->
+      <!-- 增强属性：
+           type="password"                 密文显示
+           required                        必填，为空时浏览器阻止提交
+           placeholder                     占位提示文字
+           autocomplete="current-password" 告知浏览器可填充已保存的登录密码
+           title                           校验气泡说明文字 -->
+      <div class="form-item">
+        <label for="password">登录密码<span class="required">*</span></label>
+        <input type="password" id="password" name="password"
+               placeholder="请输入密码"
+               required
+               autocomplete="current-password"
+               title="请输入登录密码">
+      </div>
+
+      <!-- ========== 3. 记住我 ========== -->
+      <!-- 普通复选框，不加 required：属于可选项，不勾选也允许提交 -->
+      <label class="remember">
+        <input type="checkbox" name="remember">
+        <span>记住我</span>
+      </label>
+
+      <button type="submit" class="btn-submit">登 录</button>
+
+      <!-- 跳转到注册页的超链接 -->
+      <p class="register-link">还没有账号？<a href="register.html">立即注册</a></p>
+    </form>
+  </main>
+
+</body>
+</html>

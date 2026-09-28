@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户注册 - AI助教答疑平台</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+      background: linear-gradient(180deg, #e8f0fb 0%, #f4f7fb 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      padding: 40px 16px;
+      color: #333;
+    }
+
+    /* ===== 页面顶部标题区 ===== */
+    .page-header {
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: #1e3a5f;
+      margin-bottom: 8px;
+    }
+
+    .page-header .page-subtitle {
+      font-size: 13px;
+      color: #9aa7b8;
+      letter-spacing: 1px;
+    }
+
+    /* ===== 白色圆角卡片，与示例图一致 ===== */
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(30, 64, 120, 0.08);
+      padding: 32px;
+    }
+
+    .card .card-title {
+      text-align: center;
+      font-size: 18px;
+      color: #1e3a5f;
+      margin-bottom: 6px;
+    }
+
+    .card .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #9aa7b8;
+      margin-bottom: 24px;
+    }
+
+    .form-item {
+      margin-bottom: 18px;
+    }
+
+    .form-item label {
+      display: block;
+      font-size: 14px;
+      color: #4a5a6e;
+      margin-bottom: 6px;
+    }
+
+    .form-item label .required {
+      color: #e5484d;
+      margin-left: 2px;
+    }
+
+    .form-item input {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      font-size: 14px;
+      border: 1px solid #dce3ec;
+      border-radius: 8px;
+      outline: none;
+      background: #fbfcfe;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    /* 输入框 hover：悬停时边框加深、背景变白 */
+    .form-item input:hover {
+      border-color: #b9cbe8;
+      background: #ffffff;
+    }
+
+    /* 输入框 focus（获取焦点）：蓝色边框 + 浅蓝光晕 */
+    .form-item input:focus {
+      border-color: #2f6fed;
+      box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.12);
+      background: #ffffff;
+    }
+
+    /* 纯CSS提示：输入过内容且不合法时标红（配合原生校验） */
+    .form-item input:not(:placeholder-shown):invalid {
+      border-color: #e5484d;
+    }
+
+    .form-item .tip {
+      font-size: 12px;
+      color: #9aa7b8;
+      margin-top: 4px;
+    }
+
+    /* 复选框一行布局 */
+    .agree {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: #4a5a6e;
+      margin: 22px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .agree input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: #2f6fed;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .agree a {
+      color: #2f6fed;
+      text-decoration: none;
+    }
+
+    .agree a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== 注册按钮：hover 上浮 + 阴影加深，active 按下回落 ===== */
+    .btn-submit {
+      width: 100%;
+      height: 44px;
+      border: none;
+      border-radius: 8px;
+      background: #2f6fed;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(47, 111, 237, 0.25);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #2560d4;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(47, 111, 237, 0.35);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(47, 111, 237, 0.3);
+    }
+
+    .login-link {
+      text-align: center;
+      font-size: 13px;
+      color: #9aa7b8;
+      margin-top: 18px;
+    }
+
+    .login-link a {
+      color: #2f6fed;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 页面顶部标题 ===== -->
+  <header class="page-header">
+    <h1>AI助教答疑平台</h1>
+    <p class="page-subtitle">智能答疑 · 随时提问</p>
+  </header>
+
+  <main class="card">
+    <h2 class="card-title">用户注册</h2>
+    <p class="subtitle">新用户注册 · 开启智能学习之旅</p>
+
+    <!--
+      ============================================================
+      HTML5 表单增强一览（以原生校验为主，仅用一小段 JS 做跨字段校验）
+      ============================================================
+       1. required                 必填校验，为空时浏览器阻止提交并弹气泡
+       2. placeholder              输入框占位提示文字
+       3. autofocus                页面加载后自动聚焦第一个输入框
+       4. type="email"             邮箱格式原生校验
+       5. type="tel"               电话输入语义（配合 inputmode 唤起数字键盘）
+       6. type="password"          密文显示
+       7. type="number" + min/max/step   数值范围校验
+       8. pattern                  正则表达式校验（手机号、用户名）
+       9. minlength / maxlength    长度限制
+      10. list + <datalist>        输入联想下拉，同时允许手动输入
+      11. checkbox + required      协议复选框必须勾选才能提交
+      12. autocomplete             自动填充语义（username/email/tel/new-password）
+      13. inputmode="numeric"      移动端弹出纯数字键盘
+      14. title                    校验失败气泡中显示的自定义说明文字
+      15. :invalid / :placeholder-shown（CSS 伪类）纯 CSS 非法输入高亮
+      16. setCustomValidity（JS）  仅用于"两次密码一致性"这种原生属性
+                                  做不到的跨字段校验，提示仍走原生气泡
+      ============================================================
+    -->
+    <form action="#" method="post" autocomplete="on" id="registerForm">
+
+      <!-- ========== 1. 用户名 ========== -->
+      <!-- 增强属性：
+           required                  必填，为空时浏览器阻止提交
+           autofocus                 页面打开自动聚焦到此输入框
+           placeholder               占位提示文字
+           minlength / maxlength     长度限制 2~16 位（maxlength 超出直接输不进）
+           pattern                   正则限定：中文、字母、数字或下划线
+           title                     校验失败气泡里显示的说明文字
+           autocomplete="username"   浏览器可自动填充用户名 -->
+      <div class="form-item">
+        <label for="username">用户名<span class="required">*</span></label>
+        <input type="text" id="username" name="username"
+               placeholder="请输入用户名"
+               required autofocus
+               minlength="2" maxlength="16"
+               pattern="[\u4e00-\u9fa5A-Za-z0-9_]{2,16}"
+               title="用户名为2-16位，支持中文、字母、数字或下划线"
+               autocomplete="username">
+        <p class="tip">2-16位，支持中文、字母、数字或下划线</p>
+      </div>
+
+      <!-- ========== 2. 邮箱 ========== -->
+      <!-- 增强属性：
+           type="email"           HTML5 原生邮箱格式校验，格式非法阻止提交
+           required               必填
+           placeholder            格式示例提示
+           autocomplete="email"   自动填充已保存的邮箱 -->
+      <div class="form-item">
+        <label for="email">邮箱<span class="required">*</span></label>
+        <input type="email" id="email" name="email"
+               placeholder="example@mail.com"
+               required
+               autocomplete="email"
+               title="请输入有效的邮箱地址">
+      </div>
+
+      <!-- ========== 3. 手机号 ========== -->
+      <!-- 增强属性：
+           type="tel"            电话输入语义
+           pattern="1[3-9]\d{9}" 正则校验大陆手机号：1 开头、第二位 3-9、共 11 位数字
+           maxlength="11"        最多只能输入 11 位
+           inputmode="numeric"   移动端弹出纯数字键盘
+           required              必填
+           autocomplete="tel"    自动填充手机号 -->
+      <div class="form-item">
+        <label for="phone">手机号码<span class="required">*</span></label>
+        <input type="tel" id="phone" name="phone"
+               placeholder="请输入11位手机号"
+               required
+               pattern="1[3-9]\d{9}"
+               maxlength="11"
+               inputmode="numeric"
+               autocomplete="tel"
+               title="请输入正确的11位大陆手机号">
+      </div>
+
+      <!-- ========== 4. 设置密码 ========== -->
+      <!-- 增强属性：
+           type="password"             密文显示
+           required                    必填
+           minlength="6"               最短 6 位，不足时浏览器阻止提交
+           maxlength="20"              最长 20 位
+           autocomplete="new-password" 告知浏览器这是新设密码，不自动填充旧密码 -->
+      <div class="form-item">
+        <label for="password">设置密码<span class="required">*</span></label>
+        <input type="password" id="password" name="password"
+               placeholder="请输入密码"
+               required
+               minlength="6" maxlength="20"
+               autocomplete="new-password"
+               title="密码长度为6-20位">
+        <p class="tip">6-20位字符</p>
+      </div>
+
+      <!-- ========== 5. 确认密码 ========== -->
+      <!-- 增强属性：
+           required                    必填校验
+           minlength / maxlength       与密码字段规则保持一致
+           注意：两次密码一致性属于"跨字段校验"，HTML5 原生属性无法实现，
+                 由页面底部的一小段 JS 通过 setCustomValidity 兜底，
+                 错误提示仍以浏览器原生气泡形式弹出 -->
+      <div class="form-item">
+        <label for="confirmPassword">确认密码<span class="required">*</span></label>
+        <input type="password" id="confirmPassword" name="confirmPassword"
+               placeholder="请再次输入密码"
+               required
+               minlength="6" maxlength="20"
+               autocomplete="new-password"
+               title="请与上面输入的密码保持一致">
+      </div>
+
+      <!-- ========== 6. 年龄 ========== -->
+      <!-- 增强属性：
+           type="number"        数值输入，浏览器禁止输入非数字字符
+           min="6" / max="80"   范围校验，超出时阻止提交
+           step="1"             步长为 1，只能填整数
+           inputmode="numeric"  移动端数字键盘
+           required             必填 -->
+      <div class="form-item">
+        <label for="age">年龄<span class="required">*</span></label>
+        <input type="number" id="age" name="age"
+               placeholder="请输入年龄"
+               required
+               min="6" max="80" step="1"
+               inputmode="numeric"
+               title="年龄需在6-80之间">
+      </div>
+
+      <!-- ========== 7. 感兴趣的学科 ========== -->
+      <!-- 增强属性：
+           list="subjectList"  关联下方 <datalist>，实现"下拉联想 + 手动输入"：
+                               输入时自动过滤匹配项，也允许填列表外的内容（区别于 select）
+           autocomplete="off"  关闭浏览器历史填充，避免干扰联想列表
+           required / maxlength
+           <datalist>          HTML5 新增标签，本身不显示，配合 list 属性生效 -->
+      <div class="form-item">
+        <label for="subject">感兴趣的学科<span class="required">*</span></label>
+        <input type="text" id="subject" name="subject"
+               placeholder="输入或从列表中选择"
+               required
+               maxlength="20"
+               list="subjectList"
+               autocomplete="off">
+        <datalist id="subjectList">
+          <option value="高等数学"></option>
+          <option value="线性代数"></option>
+          <option value="概率论与数理统计"></option>
+          <option value="大学英语"></option>
+          <option value="大学物理"></option>
+          <option value="数据结构"></option>
+          <option value="操作系统"></option>
+          <option value="计算机网络"></option>
+          <option value="数据库原理"></option>
+          <option value="机器学习"></option>
+        </datalist>
+        <p class="tip">支持手动输入，输入时会自动联想匹配</p>
+      </div>
+
+      <!-- ========== 8. 用户协议复选框 ========== -->
+      <!-- 增强属性：checkbox + required —— 不勾选时点击提交，
+           浏览器会阻止提交并自动聚焦到此复选框 -->
+      <label class="agree">
+        <input type="checkbox" name="agree" required>
+        <span>我已阅读并同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></span>
+      </label>
+
+      <button type="submit" class="btn-submit">注 册</button>
+
+      <!-- 跳转到登录页的超链接 -->
+      <p class="login-link">已有账号？<a href="login.html">立即登录</a></p>
+    </form>
+  </main>
+
+  <script>
+    // ============================================================
+    // 简单 JS：两次密码一致性校验（HTML5 原生属性做不到的跨字段校验）
+    // 思路：借助 setCustomValidity 给"确认密码"挂上原生校验错误，
+    //       错误提示仍由浏览器以原生气泡弹出，不用 alert 等自定义弹窗
+    // ============================================================
+    var form = document.getElementById('registerForm');
+    var password = document.getElementById('password');
+    var confirmPassword = document.getElementById('confirmPassword');
+
+    // 提交表单时触发（浏览器先跑完 required/pattern 等原生校验，
+    // 全部通过后才会进入 submit 事件，再在这里做跨字段比对）
+    form.addEventListener('submit', function (e) {
+      if (password.value !== confirmPassword.value) {
+        // 不一致：给确认密码设置自定义校验错误（原生机制的一部分）
+        confirmPassword.setCustomValidity('两次输入的密码不一致，请重新输入');
+        e.preventDefault();        // 阻止本次提交
+        form.reportValidity();     // 主动弹出浏览器原生错误气泡
+      } else {
+        // 一致：清空自定义错误，允许提交
+        confirmPassword.setCustomValidity('');
+      }
+    });
+
+    // 任意一个密码框重新输入时，清除上一轮挂上的自定义错误，
+    // 避免用户改对之后仍被旧错误拦截（setCustomValidity 会一直保留直到被清掉）
+    password.addEventListener('input', function () {
+      confirmPassword.setCustomValidity('');
+    });
+    confirmPassword.addEventListener('input', function () {
+      confirmPassword.setCustomValidity('');
+    });
+  </script>
+
+</body>
+</html>
