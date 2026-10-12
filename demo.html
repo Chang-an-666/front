@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zn-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔方</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        body{
+            min-height: 100vh;  /* vh 是视口单位，让 body 占满浏览器整个屏幕高度。 */
+            display:flex;       /* 弹性布局 */
+            justify-content:center;   /*水平居中*/
+            align-items: center;       /*垂直居中*/
+            /* padding-bottom: 80px; /* 底部留白 */
+            background: #222430;
+        }
+        .wrap{
+            display:flex;
+            gap:40px ;     /* 间距 */
+            background: #222430;
+
+        }
+        .shape{
+            width: 140px;
+            height: 140px;
+            box-shadow:0 8px 25px rgba(255,120,80,0,25);
+            /*box-shadow: x偏移 y偏移 模糊半径 颜色；
+            初始状态阴影向下偏移 8px，实现原图发光投影。*/
+            transition: all 0.3s ease;
+                /* position: relative;   相对定位，为了让伪元素绝对定位时参照盒子本身 */
+            }
+        .shape1{
+            border-radius: 0px; /*圆角 0，标准正方形*/
+            background: linear-gradient(135deg,#f78c48,#f24c5c);
+            /*45 度线性渐变，从橙色过渡红色。*/
+            box-shadow: 0 8px 25px rgba(255,120,80,0.35);
+        }
+        .shape2{
+            border-radius: 16px; /*圆角 16px，小圆角正方形*/
+            background: linear-gradient(135deg,#38cc64,#35d8b0);
+            box-shadow: 0 8px 25px rgba(60, 241, 184, 0.35);
+        }
+        .shape3{
+            border-radius: 36px; 
+            background: linear-gradient(135deg,#cab5e1,#3a2e47);
+            box-shadow: 0 8px 25px rgba(202, 155, 240, 0.404);
+        }
+        .shape4{
+            border-radius: 50%; /*圆角 50%，标准圆形*/
+            background: linear-gradient(135deg,#f9d56e,#f9a66e);
+            box-shadow: 0 8px 25px rgba(249, 166, 110, 0.35);
+        }
+        .shape5{
+            border-radius: 14px;
+            background: linear-gradient(135deg,#477058,#3e6878);
+            box-shadow: 0 8px 25px rgba(70,140,110,0.35);
+        }
+        .shape6{
+            border-radius: 50%; /*圆角 50% 0 50% 0，椭圆形*/
+            background: linear-gradient(180deg,#9c7cb8,#8268a2);
+            box-shadow: 0 8px 25px rgba(160,120,200,0.35);
+        }
+        .shape::after{
+            content: "hover";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            /*前端经典完全居中公式：top left 挪到盒子 50% 位置，再把自己宽高往回挪 50%，实现文字完美居中*/
+            color: white;
+            font-size: 20px;
+            opacity: 0;/*透明度 0，默认看不见文字*/
+            transform: opacity 0.3s ease;
+            /*文字显示隐藏做平滑淡入*/
+
+        }
+        .shape:hover{
+            transform: translateY(-10px); /*悬停时，盒子向上移动 1000px，消失*/
+            box-shadow: 0 0px 25px rgba(255,120,255,0.35);
+        }
+        .shape:hover::after{
+            opacity: 1; 
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5"></div>
+        <div class="shape shape6"></div>    
+
+    </div>
+</body>
+</html>
